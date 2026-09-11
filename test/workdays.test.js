@@ -5,3 +5,5 @@ test("中文日期格式",()=>assert.equal(formatChineseDate("2026-08-12"),"2026
 test("拒绝倒置范围",()=>assert.throws(()=>enumerateWorkdays("2026-08-12","2026-08-10")));
 test("Word 富文本加粗标记被拆分为加粗文本片段",()=>{const {parseRichSegments}=require("../src/word");assert.deepEqual(parseRichSegments("普通 **重点** 内容"),[{text:"普通 ",bold:false},{text:"重点",bold:true},{text:" 内容",bold:false}]);});
 test("问题时间格式化为中文日期时间",()=>{const {formatDateTime}=require("../src/word");assert.equal(formatDateTime("2026-08-12T09:30"),"2026年8月12日 09:30");});
+test("Word 模板包含统一签字确认栏",async()=>{const {createRecord}=require("../src/word");const buffer=await createRecord({content:{document_title:"测试",project_name:"项目",construction_unit:"建设",contractor_unit:"承建",supervision_unit:"监理",operation_content:"正常"}},"2026-08-12");assert.ok(buffer.length>0);});
+
